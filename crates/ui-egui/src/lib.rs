@@ -102,6 +102,8 @@ pub struct UiState {
     /// The Mix window lives in its own native window (Window › Mix in Separate Window); the main
     /// window then always shows Edit.
     pub mix_separate: bool,
+    /// The tab of the Playback Engine dialog: 0 audio, 1 MIDI.
+    pub playback_engine_tab: u8,
     pub show_io_setup: bool,
     pub show_shortcuts: bool,
     pub show_clip_effects: bool,
@@ -168,6 +170,7 @@ impl Default for UiState {
             show_playback_engine: false,
             audio: soundcraft_playback::AudioConfig::default(),
             mix_separate: false,
+            playback_engine_tab: 0,
             show_io_setup: false,
             show_shortcuts: false,
             show_clip_effects: false,

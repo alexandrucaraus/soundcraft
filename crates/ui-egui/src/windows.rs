@@ -493,8 +493,7 @@ pub fn playback_engine(app: &mut SoundApp, ctx: &egui::Context) {
     let mut listen = 0u64;
     win(ctx, &mut open, "Playback Engine", vec2(460.0, 420.0), |ui| {
         // Audio devices on one tab, MIDI devices on the other; the buttons below serve both.
-        let tab_id = egui::Id::new("playback-engine-tab");
-        let mut tab = ui.data_mut(|d| d.get_temp::<u8>(tab_id)).unwrap_or(0);
+        let mut tab = app.ui.playback_engine_tab.min(1);
         ui.horizontal(|ui| {
             for (i, l) in (0u8..).zip(["Audio", "MIDI"]) {
                 if ui.selectable_label(tab == i, l).clicked() {
@@ -502,7 +501,7 @@ pub fn playback_engine(app: &mut SoundApp, ctx: &egui::Context) {
                 }
             }
         });
-        ui.data_mut(|d| d.insert_temp(tab_id, tab));
+        app.ui.playback_engine_tab = tab;
         ui.separator();
         // Probing every device takes a moment (ALSA opens each one): listed once, then on request.
         let cache = egui::Id::new("playback-engine-devices");

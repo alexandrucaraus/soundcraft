@@ -441,6 +441,10 @@ pub fn invoke_menu(app: &mut SoundApp, id: &str, path: &str) {
     if let Some((_, w)) = MENU_WINDOWS.iter().find(|(p, _)| *p == path)
         && w.starts_with("window.")
     {
+        // Each menu item opens the Playback Engine dialog on its own tab.
+        if *w == "window.playback_engine" {
+            app.ui.playback_engine_tab = u8::from(path.starts_with("Setup > MIDI"));
+        }
         let _ = app.run(w, json!({"value": true}));
         return;
     }
